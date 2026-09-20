@@ -1,5 +1,33 @@
 [
   {
+    "id": "proj-mua3y59b-xiy7ihbr",
+    "title": "MV Música",
+    "description": "Um tocador de música e baixador all-in-one, 100% de código aberto e nativo para Android.",
+    "category": "Programa",
+    "tags": [
+      "Programa de música e baixar"
+    ],
+    "coverUrl": "https://github.com/PDariusXVII/IMAGENS-VIDEOS/blob/main/MV%20M%C3%BAsica/Screenshot_2026-09-20-15-06-22-176_com.mvmusica.debug.jpg?raw=true",
+    "images": [
+      "https://github.com/PDariusXVII/IMAGENS-VIDEOS/blob/main/MV%20M%C3%BAsica/Screenshot_2026-09-20-15-06-22-176_com.mvmusica.debug.jpg?raw=true",
+      "https://github.com/PDariusXVII/IMAGENS-VIDEOS/blob/main/MV%20M%C3%BAsica/Screenshot_2026-09-20-15-06-25-376_com.mvmusica.debug.jpg?raw=true",
+      "https://github.com/PDariusXVII/IMAGENS-VIDEOS/blob/main/MV%20M%C3%BAsica/Screenshot_2026-09-20-15-06-29-248_com.mvmusica.debug.jpg?raw=true"
+    ],
+    "videos": [
+      {
+        "url": "https://github.com/PDariusXVII/IMAGENS-VIDEOS/raw/refs/heads/main/MV%20M%C3%BAsica/Screenrecorder-2026-09-20-15-05-40-199.mp4",
+        "poster": "https://github.com/PDariusXVII/IMAGENS-VIDEOS/blob/main/MV%20M%C3%BAsica/Screenshot_2026-09-20-15-06-22-176_com.mvmusica.debug.jpg?raw=true"
+      }
+    ],
+    "docUrl": "https://raw.githubusercontent.com/PDariusXVII/PDF/3a00b406aa10a8c89f77781ae49a09aecd9ca6b3/MV%20Musica.pdf",
+    "zipUrl": "https://drive.google.com/file/d/11rwgNOI4pD_4xedFolwmndWaVPtVQgJ2/view?usp=drive_link",
+    "version": "1.0.0",
+    "updatedAt": "2026-09-20T19:10:58.722Z",
+    "readme": "# Novo Projeto\nhttps://drive.google.com/file/d/1VgpshjhTBK2b4b0Mj8iB8zlHpSkITiSe/view?usp=drive_link",
+    "files": [],
+    "links": []
+  },
+  {
     "id": "proj-mua30g1h-hbbyzpbf",
     "title": "MV Biblioteca",
     "description": "Aplicativo de leitura de livros",
