@@ -3,7 +3,10 @@
     "id": "exemplo-catalogo",
     "title": "Catálogo de Quadrinhos",
     "description": "Leitor e catálogo web para uma coleção de HQs, com navegação por capítulos e busca por título.",
-    "tags": ["JavaScript", "PWA"],
+    "tags": [
+      "JavaScript",
+      "PWA"
+    ],
     "category": "Site e Aplicativo",
     "coverUrl": "https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=800&q=80",
     "images": [
@@ -12,7 +15,9 @@
       "https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&w=1200&q=80"
     ],
     "videos": [
-      { "url": "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" }
+      {
+        "url": "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"
+      }
     ],
     "docUrl": "exemplo/documentacao-exemplo.pdf",
     "version": "1.2.0",
@@ -20,31 +25,28 @@
     "zipSize": 2411724,
     "readme": "# Catálogo de Quadrinhos\n\nProjeto de exemplo.\n\n- Leitor por capítulos\n- Busca por título\n- Funciona offline",
     "files": [
-      { "path": "index.html", "size": 18420 },
-      { "path": "assets/app.js", "size": 96112 },
-      { "path": "assets/style.css", "size": 12004 }
+      {
+        "path": "index.html",
+        "size": 18420
+      },
+      {
+        "path": "assets/app.js",
+        "size": 96112
+      },
+      {
+        "path": "assets/style.css",
+        "size": 12004
+      }
     ],
-    "links": []
-  },
-  {
-    "id": "exemplo-estudos",
-    "title": "Plataforma de Estudos",
-    "description": "Aplicação de estudo com plano semanal, revisão espaçada e conteúdo organizado por disciplina.",
-    "tags": ["React", "TypeScript"],
-    "category": "Site",
-    "coverUrl": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80",
-    "images": [],
-    "videos": [],
-    "version": "0.9.1",
-    "updatedAt": "2026-09-02T12:00:00Z",
-    "files": [],
     "links": []
   },
   {
     "id": "exemplo-leitor",
     "title": "Leitor Offline",
     "description": "Aplicativo para ler arquivos de texto e PDF sem internet, com marcadores e modo escuro.",
-    "tags": ["Android"],
+    "tags": [
+      "Android"
+    ],
     "category": "Aplicativo",
     "images": [],
     "videos": [],
@@ -56,7 +58,10 @@
     "id": "exemplo-imagens",
     "title": "Toolkit de Imagens",
     "description": "Conjunto de scripts para redimensionar, converter e otimizar imagens em lote.",
-    "tags": ["Python", "CLI"],
+    "tags": [
+      "Python",
+      "CLI"
+    ],
     "category": "Programa",
     "images": [],
     "videos": [],
