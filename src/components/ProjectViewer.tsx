@@ -7,6 +7,7 @@ import { getYouTubeEmbedUrl, videoKind } from '../lib/media';
 import type { LoadStatus, Project } from '../types';
 import { ProjectCover } from './ProjectCover';
 import { DocumentReader } from './DocumentReader';
+import { MarkdownRenderer } from './MarkdownRenderer';
 
 interface ProjectViewerProps {
   projectId: string;
@@ -364,9 +365,9 @@ export function ProjectViewer({ projectId, listItem, listStatus, docOpen, onOpen
                     <h3 className="font-oswald text-xs font-bold tracking-[0.2em] uppercase text-neutral-400 mb-3">
                       README
                     </h3>
-                    <pre className="max-h-64 overflow-auto border border-neutral-800 p-3 font-mono text-[11px] leading-relaxed text-neutral-300 whitespace-pre-wrap break-words">
-                      {project.readme}
-                    </pre>
+                    <div className="max-h-[32rem] overflow-auto rounded-md border border-neutral-800 bg-[#0d1117] px-5 py-4">
+                      <MarkdownRenderer source={project.readme} />
+                    </div>
                   </section>
                 )}
               </div>
