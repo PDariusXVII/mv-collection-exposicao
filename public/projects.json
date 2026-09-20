@@ -39,21 +39,5 @@
       }
     ],
     "links": []
-  },
-  {
-    "id": "exemplo-imagens",
-    "title": "Toolkit de Imagens",
-    "description": "Conjunto de scripts para redimensionar, converter e otimizar imagens em lote.",
-    "tags": [
-      "Python",
-      "CLI"
-    ],
-    "category": "Programa",
-    "images": [],
-    "videos": [],
-    "updatedAt": "2026-07-21T12:00:00Z",
-    "zipSize": 84310,
-    "files": [],
-    "links": []
   }
 ]
