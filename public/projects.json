@@ -41,20 +41,6 @@
     "links": []
   },
   {
-    "id": "exemplo-leitor",
-    "title": "Leitor Offline",
-    "description": "Aplicativo para ler arquivos de texto e PDF sem internet, com marcadores e modo escuro.",
-    "tags": [
-      "Android"
-    ],
-    "category": "Aplicativo",
-    "images": [],
-    "videos": [],
-    "updatedAt": "2026-06-10T12:00:00Z",
-    "files": [],
-    "links": []
-  },
-  {
     "id": "exemplo-imagens",
     "title": "Toolkit de Imagens",
     "description": "Conjunto de scripts para redimensionar, converter e otimizar imagens em lote.",
