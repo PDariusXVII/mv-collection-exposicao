@@ -30,3 +30,9 @@
   background-image: radial-gradient(#d3cbbe 0.75px, transparent 0.75px);
   background-size: 24px 24px;
 }
+
+@layer components {
+  .viewer-control {
+    @apply inline-flex items-center justify-center gap-1.5 min-h-9 border border-neutral-700 px-2.5 sm:px-3 text-[10px] font-bold tracking-[0.12em] uppercase text-neutral-300 hover:text-white hover:border-neutral-500 hover:bg-neutral-900 transition-colors disabled:opacity-35 disabled:pointer-events-none cursor-pointer;
+  }
+}

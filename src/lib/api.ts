@@ -1,6 +1,7 @@
 import { CATEGORIES, MAX_IMAGES, MAX_VIDEOS, PROJECTS_URL } from '../config/site';
 import type { Project, ProjectCategory, ProjectFile, ProjectLink, ProjectVideo } from '../types';
 import { fold } from './format';
+import { resolveMediaUrl } from './media';
 
 type Raw = Record<string, unknown>;
 
@@ -13,7 +14,7 @@ export class ApiError extends Error {
 
 const isObj = (v: unknown): v is Raw => typeof v === 'object' && v !== null && !Array.isArray(v);
 
-/** primeira chave existente (aceita camelCase e snake_case) */
+/** Primeira chave existente (aceita nomes antigos/novos e camelCase/snake_case). */
 const pick = (raw: Raw, ...keys: string[]): unknown => {
   for (const k of keys) if (raw[k] != null) return raw[k];
   return undefined;
@@ -27,36 +28,14 @@ const num = (v: unknown): number | undefined => {
   return typeof n === 'number' && Number.isFinite(n) ? n : undefined;
 };
 
-/** Resolve arquivos relativos a partir da URL do catálogo, inclusive em subpastas do GitHub Pages. */
-function resolveUrl(u?: string): string | undefined {
-  if (!u) return undefined;
-  try {
-    return new URL(u, PROJECTS_URL).href;
-  } catch {
-    return undefined;
-  }
-}
-
 const CATEGORY_ALIASES: Record<string, string> = {
-  programas: 'programa',
-  program: 'programa',
-  software: 'programa',
-  sites: 'site',
-  website: 'site',
-  web: 'site',
-  aplicativos: 'aplicativo',
-  app: 'aplicativo',
-  apps: 'aplicativo',
-  'site-aplicativo': 'site-e-aplicativo',
-  'sites-e-aplicativos': 'site-e-aplicativo',
-  'site-e-app': 'site-e-aplicativo',
-  'site-app': 'site-e-aplicativo',
-  ambos: 'site-e-aplicativo',
+  programas: 'programa', program: 'programa', software: 'programa', sites: 'site', website: 'site', web: 'site',
+  aplicativos: 'aplicativo', app: 'aplicativo', apps: 'aplicativo', 'site-aplicativo': 'site-e-aplicativo',
+  'sites-e-aplicativos': 'site-e-aplicativo', 'site-e-app': 'site-e-aplicativo', 'site-app': 'site-e-aplicativo', ambos: 'site-e-aplicativo',
 };
 
 const slug = (text: string) => fold(text).replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
 
-/** Aceita "Site e Aplicativo", "site_e_aplicativo", ["site","aplicativo"], etc. */
 export function normalizeCategory(v: unknown): ProjectCategory | undefined {
   let raw = str(v);
   if (Array.isArray(v)) {
@@ -71,16 +50,27 @@ export function normalizeCategory(v: unknown): ProjectCategory | undefined {
   return { key, label: known?.label ?? raw };
 }
 
+function normalizeUrlList(v: unknown, limit?: number): string[] {
+  const source = Array.isArray(v) ? v : v == null ? [] : [v];
+  const out: string[] = [];
+  for (const item of source) {
+    const value = str(isObj(item) ? pick(item, 'url', 'src', 'path') : item);
+    const url = resolveMediaUrl(value);
+    if (url && !out.includes(url)) out.push(url);
+  }
+  return typeof limit === 'number' ? out.slice(0, limit) : out;
+}
+
 function normalizeVideos(v: unknown): ProjectVideo[] {
-  if (!Array.isArray(v)) return [];
+  const source = Array.isArray(v) ? v : v == null ? [] : [v];
   const out: ProjectVideo[] = [];
-  for (const item of v) {
+  for (const item of source) {
     if (typeof item === 'string') {
-      const url = resolveUrl(str(item));
+      const url = resolveMediaUrl(str(item));
       if (url) out.push({ url });
     } else if (isObj(item)) {
-      const url = resolveUrl(str(pick(item, 'url', 'src')));
-      if (url) out.push({ url, poster: resolveUrl(str(pick(item, 'poster', 'posterUrl', 'poster_url', 'thumbnail'))) });
+      const url = resolveMediaUrl(str(pick(item, 'url', 'src', 'videoUrl', 'video_url', 'path')));
+      if (url) out.push({ url, poster: resolveMediaUrl(str(pick(item, 'poster', 'posterUrl', 'poster_url', 'thumbnail', 'thumb'))) });
     }
   }
   return out.slice(0, MAX_VIDEOS);
@@ -104,7 +94,7 @@ function normalizeLinks(v: unknown): ProjectLink[] {
   const out: ProjectLink[] = [];
   for (const item of v) {
     if (!isObj(item)) continue;
-    const url = resolveUrl(str(item.url));
+    const url = resolveMediaUrl(str(item.url));
     if (url) out.push({ label: str(item.label) ?? url, url });
   }
   return out;
@@ -118,23 +108,32 @@ export function normalizeProject(raw: unknown): Project | null {
     console.warn('[api] projeto ignorado (faltam "id" ou "title"):', raw);
     return null;
   }
-  const images = Array.isArray(raw.images)
-    ? raw.images
-        .map((i) => resolveUrl(str(isObj(i) ? pick(i, 'url', 'src') : i)))
-        .filter((i): i is string => Boolean(i))
-        .slice(0, MAX_IMAGES)
-    : [];
+
+  const imagesValue = pick(raw, 'images', 'imageUrls', 'image_urls', 'gallery', 'screenshots');
+  const videosValue = pick(raw, 'videos', 'videoUrls', 'video_urls', 'video', 'videoUrl', 'video_url');
+
   return {
     id,
     title,
     description: str(pick(raw, 'description', 'summary')) ?? '',
     tags: Array.isArray(raw.tags) ? raw.tags.map(str).filter((t): t is string => Boolean(t)) : [],
     category: normalizeCategory(raw.category ?? raw.type),
-    coverUrl: resolveUrl(str(pick(raw, 'coverUrl', 'cover_url', 'cover'))),
-    images,
-    videos: normalizeVideos(raw.videos),
-    docUrl: resolveUrl(str(pick(raw, 'docUrl', 'doc_url', 'documentationUrl', 'documentation_url', 'pdfUrl', 'pdf_url'))),
-    zipUrl: resolveUrl(str(pick(raw, 'zipUrl', 'zip_url', 'downloadUrl', 'download_url'))),
+    coverUrl: resolveMediaUrl(str(pick(raw, 'coverUrl', 'cover_url', 'cover', 'thumbnail', 'image'))),
+    images: normalizeUrlList(imagesValue, MAX_IMAGES),
+    videos: normalizeVideos(videosValue),
+    docUrl: resolveMediaUrl(str(pick(
+      raw,
+      'docUrl', 'doc_url',
+      'documentationUrl', 'documentation_url',
+      'pdfUrl', 'pdf_url',
+      'pdf', 'documentation', 'document', 'documentUrl', 'document_url'
+    ))),
+    zipUrl: resolveMediaUrl(str(pick(
+      raw,
+      'zipUrl', 'zip_url',
+      'downloadUrl', 'download_url',
+      'zip', 'archive', 'archiveUrl', 'archive_url'
+    ))),
     zipSize: num(pick(raw, 'zipSize', 'zip_size', 'size')),
     version: str(raw.version),
     updatedAt: str(pick(raw, 'updatedAt', 'updated_at')),
@@ -160,14 +159,9 @@ async function getJson(signal?: AbortSignal): Promise<unknown> {
   }
 }
 
-/** Lê o catálogo estático (array puro ou { projects | data | items }). */
 export async function fetchProjects(signal?: AbortSignal): Promise<Project[]> {
   const data = await getJson(signal);
-  const list = Array.isArray(data)
-    ? data
-    : isObj(data)
-      ? (pick(data, 'projects', 'data', 'items') as unknown)
-      : undefined;
+  const list = Array.isArray(data) ? data : isObj(data) ? (pick(data, 'projects', 'data', 'items') as unknown) : undefined;
   if (!Array.isArray(list)) throw new ApiError('Formato inesperado: esperava uma lista de projetos.');
   const projects: Project[] = [];
   const ids = new Set<string>();
@@ -180,7 +174,6 @@ export async function fetchProjects(signal?: AbortSignal): Promise<Project[]> {
   return projects;
 }
 
-/** Localiza os detalhes do projeto dentro do mesmo catálogo estático. */
 export async function fetchProject(id: string, signal?: AbortSignal): Promise<Project> {
   const projects = await fetchProjects(signal);
   const project = projects.find((item) => item.id === id);

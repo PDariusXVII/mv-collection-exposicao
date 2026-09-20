@@ -1,8 +1,9 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { BookOpen, Calendar, Download, ExternalLink, FileArchive, Play, Tag, X } from 'lucide-react';
-import { MAX_IMAGES, MAX_VIDEOS, SITE } from '../config/site';
+import { BookOpen, Calendar, Download, ExternalLink, FileArchive, ImageOff, Play, Tag, TriangleAlert, X } from 'lucide-react';
+import { MAX_IMAGES, MAX_VIDEOS } from '../config/site';
 import { fetchProject } from '../lib/api';
 import { formatBytes, formatDate } from '../lib/format';
+import { getYouTubeEmbedUrl, videoKind } from '../lib/media';
 import type { LoadStatus, Project } from '../types';
 import { ProjectCover } from './ProjectCover';
 import { DocumentReader } from './DocumentReader';
@@ -19,7 +20,72 @@ interface ProjectViewerProps {
   onClose: () => void;
 }
 
-type Media = { kind: 'image'; url: string } | { kind: 'video'; url: string; poster?: string };
+type Media =
+  | { kind: 'image'; url: string }
+  | { kind: 'video'; url: string; poster?: string; mode: 'youtube' | 'direct' | 'unknown' };
+
+function MediaStage({ item, projectTitle, index }: { item: Media; projectTitle: string; index: number }) {
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+  const youtubeUrl = item.kind === 'video' && item.mode === 'youtube' ? getYouTubeEmbedUrl(item.url) : undefined;
+
+  useEffect(() => {
+    setLoading(true);
+    setError(false);
+  }, [item.url]);
+
+  if (error || (item.kind === 'video' && item.mode === 'unknown')) {
+    return (
+      <div className="w-full h-full flex flex-col items-center justify-center gap-3 p-6 text-center bg-neutral-950" role="alert">
+        {item.kind === 'image' ? <ImageOff className="w-7 h-7 text-neutral-500" /> : <TriangleAlert className="w-7 h-7 text-neutral-500" />}
+        <p className="text-xs text-neutral-400">{item.kind === 'image' ? 'Esta imagem não pôde ser carregada.' : 'Este vídeo não pôde ser reproduzido dentro do catálogo.'}</p>
+        {item.kind === 'video' && (
+          <a href={item.url} target="_blank" rel="noopener noreferrer" className="text-[10px] uppercase tracking-[0.16em] text-white underline underline-offset-4">Abrir vídeo em nova aba</a>
+        )}
+      </div>
+    );
+  }
+
+  return (
+    <div className="relative w-full h-full">
+      {loading && <div className="absolute inset-0 z-[1] bg-neutral-900 animate-pulse" aria-label="Carregando mídia" />}
+      {item.kind === 'image' ? (
+        <img
+          key={item.url}
+          src={item.url}
+          alt={`${projectTitle} — imagem ${index + 1}`}
+          referrerPolicy="no-referrer"
+          onLoad={() => setLoading(false)}
+          onError={() => { setLoading(false); setError(true); }}
+          className="w-full h-full object-contain"
+        />
+      ) : item.mode === 'youtube' && youtubeUrl ? (
+        <iframe
+          key={youtubeUrl}
+          src={youtubeUrl}
+          title={`${projectTitle} — vídeo ${index + 1}`}
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowFullScreen
+          onLoad={() => setLoading(false)}
+          className="w-full h-full border-0 bg-black"
+        />
+      ) : (
+        <video
+          key={item.url}
+          src={item.url}
+          poster={item.poster}
+          controls
+          playsInline
+          preload="metadata"
+          onLoadedData={() => setLoading(false)}
+          onCanPlay={() => setLoading(false)}
+          onError={() => { setLoading(false); setError(true); }}
+          className="w-full h-full object-contain bg-black"
+        />
+      )}
+    </div>
+  );
+}
 
 /** Junta lista + detalhe: o detalhe vence, exceto quando vem vazio. */
 function merge(base: Project | undefined, extra: Project | null): Project | undefined {
@@ -80,7 +146,7 @@ export function ProjectViewer({ projectId, listItem, listStatus, docOpen, onOpen
     const imgs = project.images.length ? project.images : project.coverUrl ? [project.coverUrl] : [];
     return [
       ...imgs.slice(0, MAX_IMAGES).map((url): Media => ({ kind: 'image', url })),
-      ...project.videos.slice(0, MAX_VIDEOS).map((v): Media => ({ kind: 'video', url: v.url, poster: v.poster })),
+      ...project.videos.slice(0, MAX_VIDEOS).map((v): Media => ({ kind: 'video', url: v.url, poster: v.poster, mode: videoKind(v) })),
     ];
   }, [project]);
   const current = media[Math.min(activeImage, media.length - 1)];
@@ -137,27 +203,11 @@ export function ProjectViewer({ projectId, listItem, listStatus, docOpen, onOpen
             {/* Galeria: até 5 imagens e 2 vídeos */}
             <div className="lg:col-span-3 bg-black">
               <div className="aspect-video bg-neutral-950 flex items-center justify-center overflow-hidden">
-                {current?.kind === 'image' && (
-                  <img
-                    key={current.url}
-                    src={current.url}
-                    alt={`${project.title} — imagem ${activeImage + 1}`}
-                    referrerPolicy="no-referrer"
-                    className="w-full h-full object-contain"
-                  />
+                {current ? (
+                  <MediaStage item={current} projectTitle={project.title} index={activeImage} />
+                ) : (
+                  <ProjectCover title={project.title} />
                 )}
-                {current?.kind === 'video' && (
-                  <video
-                    key={current.url}
-                    src={current.url}
-                    poster={current.poster}
-                    controls
-                    playsInline
-                    preload="metadata"
-                    className="w-full h-full object-contain bg-black"
-                  />
-                )}
-                {!current && <ProjectCover title={project.title} />}
               </div>
 
               {media.length > 1 && (
@@ -177,7 +227,14 @@ export function ProjectViewer({ projectId, listItem, listStatus, docOpen, onOpen
                       ) : (
                         <>
                           {item.poster && (
-                            <img src={item.poster} alt="" loading="lazy" referrerPolicy="no-referrer" className="w-full h-full object-cover" />
+                            <img
+                              src={item.poster}
+                              alt=""
+                              loading="lazy"
+                              referrerPolicy="no-referrer"
+                              onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                              className="w-full h-full object-cover"
+                            />
                           )}
                           <span className="absolute inset-0 flex items-center justify-center bg-black/40">
                             <Play className="w-5 h-5 text-white fill-white" />
@@ -190,15 +247,21 @@ export function ProjectViewer({ projectId, listItem, listStatus, docOpen, onOpen
               )}
 
               {project.docUrl && (
-                <div className="p-3 border-t border-neutral-900 flex flex-wrap items-center gap-x-4 gap-y-2">
-                  <button
-                    onClick={onOpenDoc}
-                    className="inline-flex items-center gap-2 bg-white text-black hover:bg-neutral-200 text-[11px] font-bold tracking-[0.22em] uppercase px-4 py-2.5 transition-colors cursor-pointer active:scale-95"
-                  >
-                    <BookOpen className="w-3.5 h-3.5" /> {SITE.projects.docButton}
-                  </button>
-                  <span className="text-[10px] tracking-[0.16em] uppercase text-neutral-500">{SITE.projects.docCaption}</span>
-                </div>
+                <section className="p-4 sm:p-5 border-t border-neutral-800 bg-neutral-950/80">
+                  <p className="text-[9px] font-bold tracking-[0.3em] uppercase text-neutral-500 mb-2">Documentação</p>
+                  <div className="flex flex-wrap items-center justify-between gap-4">
+                    <div>
+                      <h3 className="font-oswald text-sm font-bold tracking-[0.12em] uppercase text-white">Manual / Documentação técnica</h3>
+                      <p className="mt-1 text-[10px] tracking-[0.12em] uppercase text-neutral-500">Leia o PDF diretamente dentro do catálogo</p>
+                    </div>
+                    <button
+                      onClick={onOpenDoc}
+                      className="inline-flex items-center gap-2 bg-white text-black hover:bg-neutral-200 text-[11px] font-bold tracking-[0.2em] uppercase px-4 py-2.5 transition-colors cursor-pointer active:scale-95"
+                    >
+                      <BookOpen className="w-3.5 h-3.5" /> Abrir documentação
+                    </button>
+                  </div>
+                </section>
               )}
             </div>
 
@@ -254,10 +317,10 @@ export function ProjectViewer({ projectId, listItem, listStatus, docOpen, onOpen
                     <a
                       href={project.zipUrl}
                       download
-                      rel="noopener"
+                      rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 bg-white text-black hover:bg-neutral-200 text-[11px] font-bold tracking-[0.2em] uppercase px-4 py-2.5 transition-colors"
                     >
-                      <Download className="w-3.5 h-3.5" /> Baixar .zip
+                      <Download className="w-3.5 h-3.5" /> Baixar arquivo ZIP
                     </a>
                   )}
                   {project.links.map((link) => (
