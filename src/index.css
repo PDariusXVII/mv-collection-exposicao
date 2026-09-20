@@ -1,0 +1,32 @@
+@import "tailwindcss";
+
+@theme {
+  --font-cinzel: "Cinzel", serif;
+  --font-oswald: "Oswald", sans-serif;
+  --font-sans: "Plus Jakarta Sans", sans-serif;
+}
+
+@layer base {
+  body {
+    font-family: var(--font-sans);
+  }
+  
+  h1, h2, h3, .font-cinzel {
+    font-family: var(--font-cinzel);
+  }
+
+  .font-oswald {
+    font-family: var(--font-oswald);
+  }
+}
+
+/* Atmospheric subtle vignette and grain */
+.vintage-vignette {
+  background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.05) 0%, rgba(0,0,0,0.4) 100%);
+}
+
+.paper-grain {
+  background-color: #f3f0ea;
+  background-image: radial-gradient(#d3cbbe 0.75px, transparent 0.75px);
+  background-size: 24px 24px;
+}
