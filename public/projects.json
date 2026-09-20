@@ -44,16 +44,11 @@
       "https://github.com/PDariusXVII/IMAGENS-VIDEOS/blob/main/MV%20Biblioteca%201.5/Screenshot_20260920-141541.png?raw=true",
       "https://github.com/PDariusXVII/IMAGENS-VIDEOS/blob/main/MV%20Biblioteca%201.5/Screenshot_20260920-141604.png?raw=true"
     ],
-    "videos": [
-      {
-        "url": "https://github.com/PDariusXVII/IMAGENS-VIDEOS/blob/main/MV%20Biblioteca%201.5/Screenshot_20260920-141611.png?raw=true",
-        "poster": "https://github.com/PDariusXVII/IMAGENS-VIDEOS/blob/main/MV%20Biblioteca%201.5/Screenshot_20260920-141535.png?raw=true"
-      }
-    ],
+    "videos": [],
     "docUrl": "https://raw.githubusercontent.com/PDariusXVII/PDF/095813fb9bfc75405153e7c721c5afb2abfe717e/MV%20Biblioteca%201.5.pdf",
     "zipUrl": "",
     "version": "1.0.5",
-    "updatedAt": "2026-09-20T19:11:29.862Z",
+    "updatedAt": "2026-09-20T19:26:48.356Z",
     "readme": "baixa somente o [APK](https://drive.google.com/file/d/1AsO7dLcRABdIs6n4_qXQ1oqnmf2g8SJb/view?usp=drive_link)",
     "files": [],
     "links": []
