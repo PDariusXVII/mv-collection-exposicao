@@ -23,6 +23,13 @@ const pick = (raw: Raw, ...keys: string[]): unknown => {
 const str = (v: unknown): string | undefined =>
   typeof v === 'string' && v.trim() !== '' ? v.trim() : typeof v === 'number' ? String(v) : undefined;
 
+/** ID livre: preserva exatamente letras, números, espaços e caracteres especiais. */
+const projectId = (v: unknown): string | undefined => {
+  if (typeof v === 'string') return v.trim() !== '' ? v : undefined;
+  if (typeof v === 'number' && Number.isFinite(v)) return String(v);
+  return undefined;
+};
+
 const num = (v: unknown): number | undefined => {
   const n = typeof v === 'string' ? Number(v) : v;
   return typeof n === 'number' && Number.isFinite(n) ? n : undefined;
@@ -102,7 +109,7 @@ function normalizeLinks(v: unknown): ProjectLink[] {
 
 export function normalizeProject(raw: unknown): Project | null {
   if (!isObj(raw)) return null;
-  const id = str(pick(raw, 'id', 'slug'));
+  const id = projectId(pick(raw, 'id', 'slug'));
   const title = str(pick(raw, 'title', 'name'));
   if (!id || !title) {
     console.warn('[api] projeto ignorado (faltam "id" ou "title"):', raw);
