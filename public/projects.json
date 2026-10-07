@@ -1,1 +1,28 @@
-[]
+[
+  {
+    "id": "proj-muyf1dit-tp8hjo0l",
+    "title": "APP MV Múscia",
+    "description": "Um aplicativo Android moderno e elegante para você baixar áudios do YouTube, organizar playlists personalizadas e curtir suas músicas favoritas direto no player local. Sua trilha sonora, totalmente sob seu controle.",
+    "category": "Aplicativo",
+    "tags": [
+      "MP3",
+      "Download",
+      "Open Source"
+    ],
+    "coverUrl": "https://i.pinimg.com/736x/53/af/fe/53affebd744c76178094e111d8c78667.jpg",
+    "images": [
+      "https://i.pinimg.com/736x/53/af/fe/53affebd744c76178094e111d8c78667.jpg",
+      "https://i.pinimg.com/736x/64/ad/17/64ad171338e8435e82910f2fb7b118de.jpg",
+      "https://i.pinimg.com/736x/59/68/49/59684982c6d52641963e184a7f83e0ff.jpg",
+      "https://i.pinimg.com/736x/80/70/ec/8070ecdc48bd9f86a92d10861fe849fa.jpg"
+    ],
+    "videos": [],
+    "docUrl": "",
+    "zipUrl": "https://drive.google.com/drive/folders/1I9U0lrxDWA9ai1CS-9xJSZE4o6cyo8jN?usp=drive_link",
+    "version": "3.0.2",
+    "updatedAt": "2026-10-07T18:15:14.973Z",
+    "readme": "# 📝 Sobre este Projeto: Transparência e Inspirações\n\n> **Nota do Desenvolvedor**\n> \n> Este é um documento universal que acompanha meus projetos (aplicativos, sites, scripts) para manter a transparência sobre como eles foram desenvolvidos.\n\n## ✅ Testes e Funcionamento\nQuero deixar claro que **todos os testes foram realizados e o código foi revisado para funcionar certinho**. O projeto cumpre o que promete e foi validado para o seu propósito principal.\n\n## 🤖 Auxílio de Inteligência Artificial (*Vibe Coding*)\nAcho muito importante que as pessoas saibam como eu trabalho. Sou um programador júnior e, para acelerar meu aprendizado e a construção deste projeto, contei com um pouco de utilização de **Inteligência Artificial**. \n\nSigo uma abordagem inspirada no *Vibe Coding*, onde a IA atua como uma assistente para me ajudar a estruturar ideias, resolver bloqueios e gerar partes do código. Isso significa que, embora tudo funcione bem, o código pode ter características ou estruturas próprias desse tipo de interação.\n\n## 💡 Inspirações: GitHub e Fóruns Online\nNenhum projeto de tecnologia nasce isolado no mundo. Para construir este aplicativo/site, eu busquei ideias e referências externas. \n\nMuitas das funcionalidades, lógicas ou designs encontrados aqui foram fortemente inspirados em **outros projetos de código aberto do GitHub** e em resoluções de problemas discutidas em **fóruns online** de programação. Fica aqui o meu agradecimento a toda a comunidade de desenvolvedores que compartilha conhecimento abertamente.\n\n## 🎯 Foco em Uso Pessoal (Open Source)\nEste é um projeto **Open Source** (Código Aberto), feito principalmente para **uso pessoal** das pessoas, automação e aprendizado. \n\nSinta-se à vontade para baixar, usar, clonar e modificar o código para as suas próprias necessidades!",
+    "files": [],
+    "links": []
+  }
+]
