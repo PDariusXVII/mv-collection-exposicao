@@ -53,7 +53,7 @@ export function DocumentReader({ projectTitle, docUrl, onClose }: DocumentReader
         task = pdfjs.getDocument({ url: docUrl });
         const loaded = (await task.promise) as PdfDocumentProxy;
         if (disposed) {
-          await loaded.destroy();
+          await loaded.cleanup();
           return;
         }
         setPdf(loaded as unknown as PdfDocumentProxy);
@@ -101,7 +101,7 @@ export function DocumentReader({ projectTitle, docUrl, onClose }: DocumentReader
         canvas.style.height = `${Math.floor(viewport.height)}px`;
 
         const renderTask = pageProxy.render({
-          canvasContext: context,
+          canvas,
           viewport,
           transform: ratio === 1 ? undefined : [ratio, 0, 0, ratio, 0, 0],
         });

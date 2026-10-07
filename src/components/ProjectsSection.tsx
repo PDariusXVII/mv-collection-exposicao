@@ -117,10 +117,10 @@ export function ProjectsSection({ projects, status, error, onRetry, onOpen }: Pr
 
         {/* Estados */}
         {status === 'loading' && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" aria-busy="true" aria-label="Carregando projetos">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8" aria-busy="true" aria-label="Carregando projetos">
             {[0, 1, 2].map((i) => (
               <div key={i} className="bg-[#0f0f0f] border border-neutral-800 animate-pulse">
-                <div className="aspect-[4/3] bg-neutral-900" />
+                <div className="aspect-[5/4] bg-neutral-900" />
                 <div className="p-5 space-y-3">
                   <div className="h-4 w-2/3 bg-neutral-800" />
                   <div className="h-3 w-full bg-neutral-900" />
@@ -167,7 +167,7 @@ export function ProjectsSection({ projects, status, error, onRetry, onOpen }: Pr
                   <div className="flex-1 h-px bg-black/15 self-center" />
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
                   {group.projects.map((project) => {
                     const date = formatDate(project.updatedAt);
                     const size = formatBytes(project.zipSize);
@@ -180,7 +180,7 @@ export function ProjectsSection({ projects, status, error, onRetry, onOpen }: Pr
                       >
                         <button
                           onClick={() => onOpen(project.id)}
-                          className="relative aspect-[4/3] bg-neutral-950 overflow-hidden border-b border-neutral-800 block cursor-pointer"
+                          className="relative aspect-[5/4] bg-neutral-950 overflow-hidden border-b border-neutral-800 block cursor-pointer"
                           aria-label={`Abrir ${project.title}`}
                           tabIndex={-1}
                         >
@@ -199,11 +199,11 @@ export function ProjectsSection({ projects, status, error, onRetry, onOpen }: Pr
                                 {project.category.label}
                               </p>
                             )}
-                            <h3 className="font-oswald text-base font-bold tracking-[0.14em] uppercase text-white">
+                            <h3 className="font-oswald text-lg font-bold tracking-[0.14em] uppercase text-white">
                               {project.title}
                             </h3>
                             {project.description && (
-                              <p className="text-xs text-neutral-400 leading-relaxed line-clamp-3">
+                              <p className="text-sm text-neutral-400 leading-relaxed line-clamp-3">
                                 {project.description}
                               </p>
                             )}
