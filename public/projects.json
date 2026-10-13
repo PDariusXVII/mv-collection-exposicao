@@ -1,5 +1,31 @@
 [
   {
+    "id": "proj-mv6up51b-t386a0fs",
+    "title": "MV NOTE",
+    "description": "",
+    "category": "Aplicativo",
+    "tags": [
+      "Estudos",
+      "Android",
+      "open source",
+      "mapa mental"
+    ],
+    "coverUrl": "https://i.pinimg.com/736x/0b/92/67/0b92671a4e7df36f7f34e505d132d211.jpg",
+    "images": [
+      "https://i.pinimg.com/736x/0b/92/67/0b92671a4e7df36f7f34e505d132d211.jpg",
+      "https://i.pinimg.com/736x/51/9c/41/519c41f94480d322a679e3e409da1cf7.jpg",
+      "https://i.pinimg.com/736x/03/50/6f/03506f739b7f38e7e9e6e0d4c74fb6e7.jpg"
+    ],
+    "videos": [],
+    "docUrl": "",
+    "zipUrl": "https://drive.google.com/drive/folders/1y3YkMdhHwQgZsmwGSLBSlvNxAZsaG-hu?usp=drive_link",
+    "version": "1.0.5",
+    "updatedAt": "2026-10-13T15:48:53.136Z",
+    "readme": "# 📝 Sobre este Projeto: Transparência e Inspirações\n\n> **Nota do Desenvolvedor**\n> \n> Este é um documento universal que acompanha meus projetos (aplicativos, sites, scripts) para manter a transparência sobre como eles foram desenvolvidos.\n\n## ✅ Testes e Funcionamento\nQuero deixar claro que **todos os testes foram realizados e o código foi revisado para funcionar certinho**. O projeto cumpre o que promete e foi validado para o seu propósito principal.\n\n## 🤖 Auxílio de Inteligência Artificial (*Vibe Coding*)\nAcho muito importante que as pessoas saibam como eu trabalho. Sou um programador júnior e, para acelerar meu aprendizado e a construção deste projeto, contei com um pouco de utilização de **Inteligência Artificial**. \n\nSigo uma abordagem inspirada no *Vibe Coding*, onde a IA atua como uma assistente para me ajudar a estruturar ideias, resolver bloqueios e gerar partes do código. Isso significa que, embora tudo funcione bem, o código pode ter características ou estruturas próprias desse tipo de interação.\n\n## 💡 Inspirações: GitHub e Fóruns Online\nNenhum projeto de tecnologia nasce isolado no mundo. Para construir este aplicativo/site, eu busquei ideias e referências externas. \n\nMuitas das funcionalidades, lógicas ou designs encontrados aqui foram fortemente inspirados em **outros projetos de código aberto do GitHub** e em resoluções de problemas discutidas em **fóruns online** de programação. Fica aqui o meu agradecimento a toda a comunidade de desenvolvedores que compartilha conhecimento abertamente.\n\n## 🎯 Foco em Uso Pessoal (Open Source)\nEste é um projeto **Open Source** (Código Aberto), feito principalmente para **uso pessoal** das pessoas, automação e aprendizado. \n\nSinta-se à vontade para baixar, usar, clonar e modificar o código para as suas próprias necessidades!",
+    "files": [],
+    "links": []
+  },
+  {
     "id": "proj-muzwpk6u-bg2paubw",
     "title": "APP MV BIBLIOTECA",
     "description": "Painel Admin (Web):\nInterface fechada para gerenciar o acervo.\nPermite cadastrar, editar e excluir livros, capas e arquivos (PDF/ePub) direto pelo navegador, sem mexer no código.\nAPI Backend:\nServidor central que conecta o banco de dados ao Painel, ao Site e ao Aplicativo, garantindo que qualquer mudança seja atualizada na hora.\nSite Principal:\nVitrine web pública para os usuários buscarem, visualizarem detalhes e lerem os livros diretamente pelo computador ou navegador do celular.\nApp Mobile (WebView):\nAplicativo leve para Android/iOS que carrega o sistema web otimizado para celular.\nExibe o conteúdo atualizado automaticamente pela API, dispensando atualizações constantes nas lojas de aplicativos.",
