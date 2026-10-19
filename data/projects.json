@@ -1,0 +1,15 @@
+[
+  {
+    "id": "30fc6f1051",
+    "name": "Teste",
+    "description": "",
+    "images": [
+      "https://a.com/1.jpg"
+    ],
+    "videos": [],
+    "zips": [
+      "https://a.com/x.zip"
+    ],
+    "createdAt": "2026-10-19T15:33:48.995Z"
+  }
+]
